@@ -10,7 +10,7 @@ var {
 } = React;
 var RefreshableListView = require('react-native-refreshable-listview')
 var delay = require('react-native-refreshable-listview/lib/delay')
-var TopStory = require('../stores/TopStory')
+var TopStory = require('../../models/TopStory')
 
 
 var ds = new ListView.DataSource({

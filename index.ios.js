@@ -10,7 +10,7 @@
    Text,
  } = React;
 var { TabBarIOS, } = require('react-native-icons');
-var SelectTab = require('./menu/SelectTab');
+var SelectTab = require('./app/views/menu/SelectTab');
 var TabBarItemIOS = TabBarIOS.Item;
  var TesterHome = React.createClass({
    getInitialState: function() {
