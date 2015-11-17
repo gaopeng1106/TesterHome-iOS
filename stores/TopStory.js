@@ -7,12 +7,9 @@ const API_PATH = urlJoin(config.apiHost, '/')
 
 class TopStoryStore extends CollectionStore {
   static url() {
-
     return API_PATH
   }
   static fetch() {
-    
-    console.log("当前API为:"+API_PATH);
     return fetch(this.url())
       .then(response => response.json())
   }
