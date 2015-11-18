@@ -24,7 +24,6 @@ class CollectionStore extends EventEmitter {
       .then((item) => this.set(item))
   }
   set(item) {
-
     this.items[item.id] = item
     this.emitChange()
     return item
@@ -33,14 +32,16 @@ class CollectionStore extends EventEmitter {
     return this.items[id]
   }
   all() {
+    console.log("all : ")
+    console.log(this.items)
     return _.values(this.items)
   }
   reset(items) {
     this.items = {}
-    // items could be an array or object
-    _.each(items, (item) => {
+    _.each(items.topics, (item) => {
       this.set(item)
     })
+    console.log("reset")
   }
   toJSON() {
     return this.items

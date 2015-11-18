@@ -3,7 +3,8 @@ var urlJoin = require('url-join')
 var CollectionStore = require('./Collection')
 var config = require('../config')
 
-const API_PATH = urlJoin(config.apiHost, '/')
+const API_PATH = urlJoin(config.apiBaseUrl, '/topics.json')
+// const API_PATH = urlJoin(config.apiBaseUrl, '/')
 
 class TopStoryStore extends CollectionStore {
   static url() {
@@ -22,8 +23,8 @@ class TopStoryStore extends CollectionStore {
       })
   }
   ordered() {
-    console.log(this.all())
-    return _.sortBy(this.all(), 'position')
+    console.log("ordered : " + this.all());
+    return _.sortBy(this.all(), 'id')
   }
 }
 

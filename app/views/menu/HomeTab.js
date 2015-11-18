@@ -32,15 +32,23 @@ var HomeTab = React.createClass({
     )
   },
   componentDidMount() {
+    console.log("componentDidMount")
     var topStories = this.getTopStories()
     if (!(topStories && topStories.length)) this.loadTopStories()
   },
+  getStoreWatches() {
+    this.watchStore(TopStory, _.debounce(() => {
+      if (this.isMounted()) {
+        this.setState({dataSource: baseDataSource.cloneWithRows(this.getTopStories())})
+      }
+    }, 100))
+  },
   loadTopStories() {
-    
+    console.log("loadTopStories")
     return TopStory.fetch()
   },
   getTopStories() {
-    console.log("getTopStories");
+    console.log("getTopStories : " + TopStory.ordered());
     return TopStory.ordered()
   },
   render() {
