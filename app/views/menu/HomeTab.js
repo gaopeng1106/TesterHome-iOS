@@ -1,5 +1,5 @@
 'use strict';
-
+var _ = require('underscore')
 var React = require('react-native');
 var {
   AppRegistry,
@@ -11,26 +11,35 @@ var {
 var RefreshableListView = require('react-native-refreshable-listview')
 var delay = require('react-native-refreshable-listview/lib/delay')
 var TopStory = require('../../models/TopStory')
+var Loading = require('./Loading')
+var StoreWatchMixin = require('./StoreWatchMixin')
+var StoryListItem = require('./StoryListItem')
 
 
 var ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1.id !== r2.id
 })
 var HomeTab = React.createClass({
+  mixins: [
+    StoreWatchMixin,
+  ],
   getInitialState() {
+    console.log("getInitialState")
    return {
      dataSource: ds.cloneWithRows(this.getTopStories()),
    }
  },
-  renderItem(item) {
-    return (
-      <View style={{height: 40, backgroundColor: '#ffffff', borderWidth: 0.5, borderColor: '#d6d7da'}}>
-        <Text>
-          {item.position()}
-        </Text>
-      </View>
-    )
-  },
+ renderItem(story) {
+  //  console.log("============")
+  //  console.log(story.id)
+   return (
+     <StoryListItem
+       story={story}
+       onSelectComments={this.gotoComments}
+       onSelectArticle={this.gotoArticle}
+     />
+   )
+ },
   componentDidMount() {
     console.log("componentDidMount")
     var topStories = this.getTopStories()
@@ -39,28 +48,34 @@ var HomeTab = React.createClass({
   getStoreWatches() {
     this.watchStore(TopStory, _.debounce(() => {
       if (this.isMounted()) {
-        this.setState({dataSource: baseDataSource.cloneWithRows(this.getTopStories())})
+        this.setState({dataSource: ds.cloneWithRows(this.getTopStories())})
       }
     }, 100))
   },
+
   loadTopStories() {
     console.log("loadTopStories")
     return TopStory.fetch()
   },
   getTopStories() {
-    console.log("getTopStories : " + TopStory.ordered());
     return TopStory.ordered()
   },
   render() {
-    return (
-      <RefreshableListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderItem}
-        loadData={this.loadTopStories}
-        refreshDescription="Refreshing items"
-        refreshPrompt="Pull down to refresh"
-      />
-    )
+    if (this.state.dataSource.getRowCount() === 0) {
+      return (
+        <Loading>top stories</Loading>
+      )
+    } else {
+        return (
+          <RefreshableListView
+            dataSource={this.state.dataSource}
+            renderRow={this.renderItem}
+            loadData={this.loadTopStories}
+            refreshDescription="Refreshing items"
+            refreshPrompt="Pull down to refresh"
+          />
+        )
+      }
   },
 
 

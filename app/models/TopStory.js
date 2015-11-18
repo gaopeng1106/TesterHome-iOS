@@ -1,9 +1,10 @@
 var _ = require('underscore')
 var urlJoin = require('url-join')
 var CollectionStore = require('./Collection')
+var apilist = require('../webapi/apilist');
 var config = require('../config')
 
-const API_PATH = urlJoin(config.apiBaseUrl, '/topics.json')
+const API_PATH = apilist.RECENT_TOP_API;
 // const API_PATH = urlJoin(config.apiBaseUrl, '/')
 
 class TopStoryStore extends CollectionStore {
@@ -23,8 +24,7 @@ class TopStoryStore extends CollectionStore {
       })
   }
   ordered() {
-    console.log("ordered : " + this.all());
-    return _.sortBy(this.all(), 'id')
+    return _.sortBy(this.all(),'id')
   }
 }
 
