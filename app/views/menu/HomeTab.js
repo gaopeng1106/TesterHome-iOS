@@ -71,7 +71,7 @@ var HomeTab = React.createClass({
             dataSource={this.state.dataSource}
             renderRow={this.renderItem}
             loadData={this.loadTopStories}
-            refreshDescription="Refreshing items"
+            refreshDescription="更新"
             refreshPrompt="Pull down to refresh"
           />
         )

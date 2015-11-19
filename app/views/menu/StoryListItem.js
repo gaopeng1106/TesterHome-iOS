@@ -1,5 +1,6 @@
 var moment = require('moment')
 var React = require('react-native')
+var { Icon, } = require('react-native-icons');
 var {
   Image,
   PixelRatio,
@@ -21,7 +22,7 @@ var StoryListItem = React.createClass({
   renderTitle(story) {
     return (
       <Text style={styles.storyTitle} numberOfLines={2}>
-        {story.id}. {story.title}
+        {story.title}
       </Text>
     )
   },
@@ -58,9 +59,11 @@ var StoryListItem = React.createClass({
     return (
       <TouchableHighlight onPress={this.handleSelectComments} underlayColor="white">
         <View style={styles.commentsCell}>
-          <Image
-            style={styles.icon}
-            // source={require('image!comment')}
+        <Icon
+          name='ion|chatbox-working'
+          size={32}
+          // color='#999999'
+          style={styles.icon}
           />
           <Text style={styles.commentsText}>{story.replies_count} comments</Text>
         </View>

@@ -84,7 +84,7 @@ var TabBarItemIOS = TabBarIOS.Item;
          </TabBarItemIOS>
          <TabBarItemIOS
              name="messages"
-             iconName={'ion|chatbubble-working'}
+             iconName={'ion|android-notifications-none'}
              title={'通知'}
              iconSize={32}
              accessibilityLabel="Messages Tab"

@@ -24,7 +24,9 @@ class TopStoryStore extends CollectionStore {
       })
   }
   ordered() {
-    return _.sortBy(this.all(),'id')
+    return _.sortBy(this.all(),function(item) {
+    return - item.id;
+},'id')
   }
 }
 
