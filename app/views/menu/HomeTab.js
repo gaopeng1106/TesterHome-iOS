@@ -68,6 +68,8 @@ var HomeTab = React.createClass({
     } else {
         return (
           <RefreshableListView
+            initialListSize={20}
+            pageSize={20}
             dataSource={this.state.dataSource}
             renderRow={this.renderItem}
             loadData={this.loadTopStories}

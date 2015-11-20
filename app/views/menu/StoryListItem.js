@@ -1,4 +1,5 @@
 var moment = require('moment')
+
 var React = require('react-native')
 var { Icon, } = require('react-native-icons');
 var {
@@ -13,6 +14,7 @@ var Text = require('./Text')
 var Badge = require('./Badge')
 
 var StoryListItem = React.createClass({
+
   handleSelectArticle() {
     this.props.onSelectArticle(this.props.story)
   },
@@ -33,7 +35,7 @@ var StoryListItem = React.createClass({
         <View>
           <Text style={styles.storyTime} numberOfLines={1}>
             {' '}
-            submitted {moment(story.time*1000).fromNow()} by {story.by}
+            {story.user.login}
           </Text>
         </View>
       </View>
@@ -62,10 +64,10 @@ var StoryListItem = React.createClass({
         <Icon
           name='ion|chatbox-working'
           size={32}
-          // color='#999999'
+          color='#999999'
           style={styles.icon}
           />
-          <Text style={styles.commentsText}>{story.replies_count} comments</Text>
+          <Text style={styles.commentsText}>{story.replies_count} 条回复</Text>
         </View>
       </TouchableHighlight>
     )
@@ -107,9 +109,10 @@ var styles = StyleSheet.create({
   },
   storyTitle: {
     height: 44,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
     marginBottom: 2,
+    color:'#5CACEE'
   },
   storyTime: {
     color: '#999999',
