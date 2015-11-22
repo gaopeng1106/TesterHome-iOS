@@ -1,7 +1,7 @@
 var moment = require('moment')
-
 var React = require('react-native')
 var { Icon, } = require('react-native-icons');
+var lang = require('moment/locale/zh-cn');
 var {
   Image,
   PixelRatio,
@@ -24,7 +24,7 @@ var StoryListItem = React.createClass({
   renderTitle(story) {
     return (
       <Text style={styles.storyTitle} numberOfLines={2}>
-        {story.title}
+        {story.id}.{story.title}
       </Text>
     )
   },
@@ -35,7 +35,7 @@ var StoryListItem = React.createClass({
         <View>
           <Text style={styles.storyTime} numberOfLines={1}>
             {' '}
-            {story.user.login}
+            {story.user.login} 发布于{moment(story.created_at).fromNow()}
           </Text>
         </View>
       </View>
@@ -53,6 +53,22 @@ var StoryListItem = React.createClass({
           </View>
         </TouchableHighlight>
       </View>
+    )
+  },
+  renderPhotoButton() {
+    var {story} = this.props
+
+    return (
+      <TouchableHighlight onPress={this.handleSelectComments} underlayColor="white">
+        <View style={styles.photoCell}>
+        <Icon
+          name='ion|chatbox-working'
+          size={32}
+          color='#555555'
+          style={styles.photo}
+          />
+        </View>
+      </TouchableHighlight>
     )
   },
   renderCommentsButton() {
@@ -99,6 +115,10 @@ var styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  photo:{
+    width:64,
+    width:64,
+  },
   storyCell: {
     flex: 1,
     flexDirection: 'column',
@@ -110,9 +130,9 @@ var styles = StyleSheet.create({
   storyTitle: {
     height: 44,
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: 'normal',
     marginBottom: 2,
-    color:'#5CACEE'
+    // color:'#5CACEE'
   },
   storyTime: {
     color: '#999999',
@@ -141,6 +161,13 @@ var styles = StyleSheet.create({
   commentsText: {
     fontSize: 10,
     textAlign: 'center',
+  },
+  photoCell: {
+    marginLeft:0,
+    // padding: cellPadding,
+    width: 80,
+    // alignItems: 'center',
+    backgroundColor: 'black',
   },
   cellBorder: {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',

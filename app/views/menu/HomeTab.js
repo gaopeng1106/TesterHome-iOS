@@ -14,7 +14,10 @@ var TopStory = require('../../models/TopStory')
 var Loading = require('./Loading')
 var StoreWatchMixin = require('./StoreWatchMixin')
 var StoryListItem = require('./StoryListItem')
-
+var apilist = require('../../webapi/apilist');
+var Routes = require('../../Routes')
+var StarTab = require('./StarTab')
+var API_RECENT_PATH = apilist.RECENT_TOP_API;
 
 var ds = new ListView.DataSource({
   rowHasChanged: (r1, r2) => r1.id !== r2.id
@@ -25,8 +28,11 @@ var HomeTab = React.createClass({
   ],
   getInitialState() {
     console.log("getInitialState")
-   return {
+    return {
      dataSource: ds.cloneWithRows(this.getTopStories()),
+     limit:20,
+     url: apilist.fetchResourceWithPage(API_RECENT_PATH,)
+
    }
  },
  renderItem(story) {
@@ -52,30 +58,54 @@ var HomeTab = React.createClass({
       }
     }, 100))
   },
-
+  //查看评论
+  gotoComments(story) {
+    this.props.navigator.push(Routes.Comments(story))
+  },
+  //查看帖子
+  gotoArticle(story) {
+    this.props.navigator.push(StarTab)
+  },
   loadTopStories() {
-    console.log("loadTopStories")
-    return TopStory.fetch()
+    // console.log("loadTopStories : " + this.state.url)
+    return TopStory.fetch(this.state.url)
   },
   getTopStories() {
     return TopStory.ordered()
   },
+  loadMore() {
+    // console.log("bottom")
+    this.state.limit = this.state.limit + 20
+    this.state.url=apilist.fetchResourceWithPage(API_RECENT_PATH,0,this.state.limit)
+    this.loadTopStories()
+    this.setState({dataSource: ds.cloneWithRows(this.getTopStories())})
+  },
   render() {
     if (this.state.dataSource.getRowCount() === 0) {
       return (
-        <Loading>top stories</Loading>
+        <Loading>获取中...</Loading>
       )
     } else {
         return (
           <RefreshableListView
-            initialListSize={20}
-            pageSize={20}
             dataSource={this.state.dataSource}
             renderRow={this.renderItem}
             loadData={this.loadTopStories}
+            style={styles.topicListView}
+            ignoreInertialScroll={true}
             refreshDescription="更新"
             refreshPrompt="Pull down to refresh"
+            removeClippedSubviews={true}
+            onEndReachedThreshold={0}
+            onEndReached={this.loadMore}
+            minDisplayTime={500}
+            minPulldownDistance={80}
+            minBetweenTime={2000}
+            // refreshingIndictatorComponent={
+            //   <RefreshableListView.RefreshingIndicator stylesheet={styles} />
+            // }
           />
+
         )
       }
   },
@@ -84,17 +114,12 @@ var HomeTab = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  card: {
-    borderWidth: 1,
-    backgroundColor: '#fff',
-    borderColor: 'rgba(0,0,0,0.1)',
-    margin: 5,
-    height: 150,
-    padding: 15,
-    shadowColor: '#ccc',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
+
+  topicListView: {
+    flex: 1,
+    backgroundColor: '#f0f0f0',
+    padding: 5,
+    overflow: 'hidden'
   },
 
 });

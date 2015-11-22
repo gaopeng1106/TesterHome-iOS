@@ -4,19 +4,21 @@ var CollectionStore = require('./Collection')
 var apilist = require('../webapi/apilist');
 var config = require('../config')
 
-const API_PATH = apilist.RECENT_TOP_API;
+var API_PATH = apilist.RECENT_TOP_API;
 // const API_PATH = urlJoin(config.apiBaseUrl, '/')
 
 class TopStoryStore extends CollectionStore {
   static url() {
+    console.log(API_PATH)
     return API_PATH
   }
-  static fetch() {
-    return fetch(this.url())
+  static fetch(url) {
+
+    return fetch(url)
       .then(response => response.json())
   }
-  fetch() {
-    return this.constructor.fetch()
+  fetch(url) {
+    return this.constructor.fetch(url)
       .then((items) => {
         this.reset(items)
         this.emitChange()
@@ -24,9 +26,13 @@ class TopStoryStore extends CollectionStore {
       })
   }
   ordered() {
+    console.log()
     return _.sortBy(this.all(),function(item) {
-    return - item.id;
-},'id')
+                                  return - item.id;
+                                },'id')
+  }
+  setUrl(url){
+    API_PATH = url
   }
 }
 

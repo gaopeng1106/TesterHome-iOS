@@ -29,6 +29,7 @@ class CollectionStore extends EventEmitter {
     this.emitChange()
     return item
   }
+  
   get(id) {
     return this.items[id]
   }

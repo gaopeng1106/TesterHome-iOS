@@ -51,7 +51,7 @@ var TabBarItemIOS = TabBarIOS.Item;
          selectedTab={this.state.selectedTab}
          tintColor={'#5555DD'}
          barTintColor={'#ffffff'}
-         styles={styles.tabBar}>
+         >
          <TabBarItemIOS
            name="home"
            iconName={'ion|ios-home-outline'}
@@ -121,24 +121,7 @@ var TabBarItemIOS = TabBarIOS.Item;
      flex: 1,
      marginTop: 30,
    },
-   tabView: {
-     padding: 10,
-     backgroundColor: 'rgba(0,0,0,0.01)',
-   },
-   card: {
-     borderWidth: 1,
-     backgroundColor: '#fff',
-     borderColor: 'rgba(0,0,0,0.1)',
-     margin: 5,
-     height: 150,
-     padding: 15,
-     shadowColor: '#ccc',
-     shadowOffset: {
-       width: 2,
-       height: 2
-     },
-     shadowOpacity: 0.5,
-     shadowRadius: 3,
-   },
+  
+
  });
  AppRegistry.registerComponent('TesterHome', () => TesterHome);

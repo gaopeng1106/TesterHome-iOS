@@ -12,7 +12,7 @@ var Loading = React.createClass({
     return (
       <View style={styles.container}>
         <View style={[styles.loading]}>
-          <Text>Loading {this.props.children}</Text>
+          <Text>{this.props.children}</Text>
           <ActivityIndicatorIOS style={{alignSelf: 'center'}} />
         </View>
       </View>
