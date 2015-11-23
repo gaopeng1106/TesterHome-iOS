@@ -1,11 +1,21 @@
 var urlJoin = require('url-join')
 var CollectionStore = require('./Collection')
-var config = require('../config')
 
-const API_PATH = urlJoin(config.apiHost, '/topics.json')
 
 class StoryStore extends CollectionStore {
-  static url() { return API_PATH }
+  static url() { return DETAIL_PATH }
+  static fetch(url) {
+    return fetch(url)
+      .then(response => response.json())
+  }
+  fetch(url) {
+    return this.constructor.fetch(url)
+      .then((items) => {
+        this.reset(items)
+        this.emitChange()
+        return items
+      })
+  }
 }
 
 module.exports = new StoryStore

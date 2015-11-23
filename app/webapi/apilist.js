@@ -26,6 +26,7 @@ var fetchResourceWithPage = (request, offset=0, pageSize=20) => {
 
 // 默认主题列表
 const TOPIC_API = apiResourceWrapper('topics.json');
+const DETAIL_API = apiResourceWrapper('topics/');
 
 /**
  * 帖子

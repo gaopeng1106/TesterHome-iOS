@@ -17,7 +17,7 @@ class Routes {
     return {
       component: require('./views/menu/ArticleScreen'),
       title: '帖子详情',
-      passProps: {url: story.url}
+      passProps: {story: story}
     }
   }
   static Link(url) {

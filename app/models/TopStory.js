@@ -2,7 +2,6 @@ var _ = require('underscore')
 var urlJoin = require('url-join')
 var CollectionStore = require('./Collection')
 var apilist = require('../webapi/apilist');
-var config = require('../config')
 
 var API_PATH = apilist.RECENT_TOP_API;
 // const API_PATH = urlJoin(config.apiBaseUrl, '/')
@@ -13,7 +12,6 @@ class TopStoryStore extends CollectionStore {
     return API_PATH
   }
   static fetch(url) {
-
     return fetch(url)
       .then(response => response.json())
   }
@@ -31,9 +29,7 @@ class TopStoryStore extends CollectionStore {
                                   return - item.id;
                                 },'id')
   }
-  setUrl(url){
-    API_PATH = url
-  }
+
 }
 
 module.exports = new TopStoryStore
