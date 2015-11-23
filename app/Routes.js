@@ -16,7 +16,7 @@ class Routes {
   static Article(story) {
     return {
       component: require('./views/menu/ArticleScreen'),
-      title: story.title,
+      title: '帖子详情',
       passProps: {url: story.url}
     }
   }
@@ -31,7 +31,7 @@ class Routes {
     if (story == null) throw new Error('missing argument: story')
 
     var route = {
-      component: require('./components/CommentsScreen'),
+      component: require('./views/menu/CommentsScreen'),
       title: 'Comments',
     }
 

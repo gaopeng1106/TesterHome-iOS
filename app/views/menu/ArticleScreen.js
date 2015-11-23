@@ -24,7 +24,7 @@ var ArticleScreen = React.createClass({
   render() {
     return (
       <View style={styles.card}>
-       <Text>个人信息</Text>
+       <Text>帖子详情</Text>
       </View>
     )
   }

@@ -13,7 +13,7 @@ var MeTab = require('./MeTab');
 var SelectTab = React.createClass({
     _selectView(nav){
       if(nav=="home"){
-        return <HomeTab/>
+        return <HomeTab navigator={this.props.navigator}/>
       }else if(nav=="star"){
         return <StarTab/>
       }else if(nav=="messages"){
@@ -22,12 +22,10 @@ var SelectTab = React.createClass({
         return <MeTab/>
       }else{
         <View style={styles.card}>
-          <Text>为发现匹配视图</Text>
+          <Text>未发现匹配视图</Text>
         </View>
       }
     },
-
-
     render(){
       return(
         <View style={styles.card}>
@@ -35,9 +33,6 @@ var SelectTab = React.createClass({
         </View>
       );
     }
-
-
-
 });
 var styles = StyleSheet.create({
   card: {

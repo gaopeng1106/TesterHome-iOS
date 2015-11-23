@@ -16,7 +16,6 @@ var StoreWatchMixin = require('./StoreWatchMixin')
 var StoryListItem = require('./StoryListItem')
 var apilist = require('../../webapi/apilist');
 var Routes = require('../../Routes')
-var StarTab = require('./StarTab')
 var API_RECENT_PATH = apilist.RECENT_TOP_API;
 
 var ds = new ListView.DataSource({
@@ -64,7 +63,7 @@ var HomeTab = React.createClass({
   },
   //查看帖子
   gotoArticle(story) {
-    this.props.navigator.push(StarTab)
+    this.props.navigator.push(Routes.Article(story))
   },
   loadTopStories() {
     // console.log("loadTopStories : " + this.state.url)
