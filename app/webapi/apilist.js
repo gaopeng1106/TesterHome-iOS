@@ -2,6 +2,7 @@ var config = require('../config');
 
 // lambdas
 var apiResourceWrapper = (...params) => config.apiBaseUrl + params.join('/');
+var apiPhotoWarpper = (...params) => config.baseUrl + params.join('/');
 var requestParamsWrapper = (api, ...params) => api + '?' + params.join('&');
 
 // 分页获取
@@ -26,7 +27,7 @@ var fetchResourceWithPage = (request, offset=0, pageSize=20) => {
 
 // 默认主题列表
 const TOPIC_API = apiResourceWrapper('topics.json');
-const DETAIL_API = apiResourceWrapper('topics/');
+const DETAIL_API = apiResourceWrapper('topics');
 
 /**
  * 帖子
@@ -62,6 +63,7 @@ module.exports = {
   EXEC_TOPIC_API,
   NO_REPLY_API,
   RECENT_TOP_API,
+  DETAIL_API,
 
   JOB_API,
   QA_API,

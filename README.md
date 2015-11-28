@@ -10,6 +10,7 @@ iOS App For TesterHome
 
 
 [react-native-icons](https://github.com/corymsmith/react-native-icons)
+[react-native-markdown](https://github.com/lwansbrough/react-native-markdown)
 
 # 环境
 
@@ -30,7 +31,3 @@ iOS App For TesterHome
 因为该项目用到了`react-native-icons`插件，配置的过程请参考:
 
 [react-native-icons插件配置](http://blog.csdn.net/itfootball/article/details/48710827)
-
-
-
-

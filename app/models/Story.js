@@ -9,6 +9,7 @@ class StoryStore extends CollectionStore {
       .then(response => response.json())
   }
   fetch(url) {
+    console.log("Story->fetch : " + url)
     return this.constructor.fetch(url)
       .then((items) => {
         this.reset(items)

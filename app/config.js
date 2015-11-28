@@ -2,6 +2,6 @@
 
 module.exports = {
   'brandName': 'TesterHome',
-  'apiBaseUrl': 'https://testerhome.com/api/v3/'
-  // 'apiBaseUrl':'http://api.hackernewsmobile.com/'
+  'apiBaseUrl': 'https://testerhome.com/api/v3/',
+  'baseUrl':'https://testerhome.com',
 };

@@ -29,7 +29,7 @@ class CollectionStore extends EventEmitter {
     this.emitChange()
     return item
   }
-  
+
   get(id) {
     return this.items[id]
   }
@@ -37,15 +37,11 @@ class CollectionStore extends EventEmitter {
     return _.values(this.items)
   }
   reset(items) {
-
     this.items = {}
-
-    _.each(items.topics, (item) => {
+    _.each(items, (item) => {
+      // console.log(item)
       this.set(item)
     })
-
-
-
   }
   toJSON() {
     return this.items

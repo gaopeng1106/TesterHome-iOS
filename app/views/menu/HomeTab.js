@@ -30,8 +30,7 @@ var HomeTab = React.createClass({
     return {
      dataSource: ds.cloneWithRows(this.getTopStories()),
      limit:20,
-     url: apilist.fetchResourceWithPage(API_RECENT_PATH,)
-
+     url: apilist.fetchResourceWithPage(API_RECENT_PATH,)   
    }
  },
  renderItem(story) {

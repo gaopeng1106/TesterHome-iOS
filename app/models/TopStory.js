@@ -18,7 +18,7 @@ class TopStoryStore extends CollectionStore {
   fetch(url) {
     return this.constructor.fetch(url)
       .then((items) => {
-        this.reset(items)
+        this.reset(items.topics)
         this.emitChange()
         return items
       })
