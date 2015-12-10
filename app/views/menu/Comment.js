@@ -24,7 +24,7 @@ var Comment = React.createClass({
   renderBody(comment) {
     return (
       <View style={styles.commentBody}>
-        <HTMLView value={comment.text} />
+        <HTMLView value={comment.body_html} />
         {comment.childItems ? <CommentList comments={comment.childItems} /> : null}
       </View>
     )
@@ -47,13 +47,10 @@ var Comment = React.createClass({
               {' '}
               {moment(comment.created_at).fromNow()} by {comment.user.login}
             </Text>
-            <Text style={styles.muted}>
-              {' '}
-              {comment.body_html}
-            </Text>
+            
           </View>
         </TouchableHighlight>
-        {open ? this.renderBody(comment) : null}
+        {this.renderBody(comment)}
       </View>
     )
   }
