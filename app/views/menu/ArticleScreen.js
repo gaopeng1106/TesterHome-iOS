@@ -1,8 +1,13 @@
 var moment = require('moment')
 var React = require('react-native')
+var markdown = require('markdown').markdown
 var _ = require('underscore')
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 var FacebookTabBar = require('../../vendor/FacebookTabBar');
+var Markdown = require('../../vendor/md/Markdown');
+var moment = require('moment');
+var lang = require('moment/locale/zh-cn');
+var { Icon, } = require('react-native-icons');
 var {
   WebView,
   ScrollView,
@@ -18,7 +23,10 @@ var lang = require('moment/locale/zh-cn');
 var Story = require('../../models/Story')
 var apilist = require('../../webapi/apilist');
 var StoreWatchMixin = require('./StoreWatchMixin')
-var currentapi = apilist.DETAIL_API;
+var currentApi = apilist.DETAIL_API;
+var currentWebviewApi = apilist.WEBVIEW_DETAIL_API;
+var Dimensions = require('Dimensions');
+var width = Dimensions.get('window').width;
 var ArticleScreen = React.createClass({
   mixins: [
     StoreWatchMixin,
@@ -26,7 +34,8 @@ var ArticleScreen = React.createClass({
   getInitialState() {
     return {
       id : this.props.id,
-      url: currentapi + "/" + this.props.id,
+      url: currentApi + this.props.id,
+      webUrl:currentWebviewApi + this.props.id,
       story:this.getStory(),
    }
  },
@@ -60,29 +69,7 @@ var ArticleScreen = React.createClass({
   getStory(){
     return Story.get(this.props.id);
   },
-  renderTitle(){
-      return (
-          <Text style={styles.title}>{this.getStory().title}</Text>
-      )
-  },
-  renderLogo(story){
-    return(
-      <Image style={styles.logo} source={{uri: 'https://testerhome.com/user/large_avatar/5764.jpg'}}/>
-    )
-  },
-  //绘制帖子详情
-  renderBody(){
-          <ScrollView tabLabel="详情" style={styles.scrollView}>
-              <Text style={styles.body}>111</Text>
-              <Text>{this.state.story.body}</Text>
-          </ScrollView>
-  },
-  renderTitleAndLogo(story){
-    <View style={styles.title}>
-      {this.renderTitle(story)}
-      {this.renderLogo(story)}
-    </View>
-  },
+
   render() {
     console.log("render : " + this.state.story)
     if (!(this.state.story)) {
@@ -90,16 +77,28 @@ var ArticleScreen = React.createClass({
         <Loading>获取帖子详细信息...</Loading>
       )
     } else {
+      console.log("webview : " + 'https://testerhome.com/' + this.state.story.user.avatar_url)
+
       return (
         <View style={styles.container}>
+          <View style={[styles.titleContainer,styles.titleOne]}>
+            <Text style={[styles.title,styles.titileWidth]} >{this.state.story.title}</Text>
+            <Image style={styles.logo} source={{uri: 'https://testerhome.com/' + this.state.story.user.avatar_url}}/>
+          </View>
           <View style={styles.titleContainer}>
-            {this.renderTitle()}
+            <Text style={[styles.title,styles.secendTitileWidth]}>{this.state.story.node_name}</Text>
+            <Text style={[styles.title,styles.secendTitileWidth]}>.{this.state.story.user.login}</Text>
+            <Text style={[styles.title,styles.secendTitileWidth]}>.{moment(this.state.story.created_at).fromNow()}</Text>
+            <Text style={[styles.title,styles.secendTitileWidth]}>.{this.state.story.hits}次阅读</Text>
           </View>
-          <View style={styles.bodyContainer}>
-            <ScrollView style={styles.card}>
-              <Text>{this.state.story.body}</Text>
-            </ScrollView>
+          <View style={styles.titleContainer}>
+
           </View>
+          <WebView
+            url={this.state.webUrl}
+            renderError={this.renderError}
+            renderLoading={this.renderError}
+            />
         </View>
       )
     }
@@ -107,34 +106,30 @@ var ArticleScreen = React.createClass({
 })
 
 var styles = StyleSheet.create({
-  titleContainer: {
-    // padding: 10,
-    backgroundColor:'#5555DD',
-    height:150,
-
-  },
-  scrollView: {
-    backgroundColor: '#6A85B1',
-    height: 300,
-  },
   container:{
     flex:1,
   },
-  titleOneLine:{
-      flexDirection:'row',
+  titleContainer: {
+    padding:10,
+    backgroundColor:'#5555DD',
+    flexDirection:'row',
+    justifyContent:'flex-start',
   },
   title:{
-    paddingLeft:10,
-    paddingTop:10,
     color:'white',
+    flexWrap:'wrap',
+  },
+  titileWidth:{
     fontSize:15,
-    width:250,
-    alignItems:'flex-end',
+    width: width*7/10,
+  },
+  secendTitileWidth:{
+    fontSize:13,
   },
   logo:{
-    width:32,
-    height:32,
-    alignItems:'flex-end',
+    width:48,
+    height:48,
+    marginLeft:10,
   },
   secend:{
     paddingLeft:10,

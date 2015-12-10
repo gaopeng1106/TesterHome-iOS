@@ -11,6 +11,7 @@ iOS App For TesterHome
 
 [react-native-icons](https://github.com/corymsmith/react-native-icons)
 [react-native-markdown](https://github.com/lwansbrough/react-native-markdown)
+[react-native-htmlview](https://github.com/jsdf/react-native-htmlview)
 
 # 环境
 

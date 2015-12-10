@@ -38,7 +38,7 @@ class Routes {
     // TODO: get title from store?
     if (story.title) route.title = `Comments – ${story.title}`
 
-    route.passProps = {storyId: story.id}
+    route.passProps = {id: story.id}
 
     return route
   }

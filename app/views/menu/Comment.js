@@ -38,14 +38,18 @@ var Comment = React.createClass({
     return (
       <View style={styles.comment}>
         <TouchableHighlight onPress={this.handleDisclosureClick} underlayColor="white">
-          <View style={[styles.disclosureRow, styles.inline]}>
+          <View style={styles.container}>
             <Image
-              source={open ? require('image!disclosure90') : require('image!disclosure')}
+              source={{uri: 'https://testerhome.com/' + comment.user.avatar_url}}
               style={[styles.disclosure, styles.muted]}
             />
             <Text style={styles.muted}>
               {' '}
-              {moment(comment.time*1000).fromNow()} by {comment.by}
+              {moment(comment.created_at).fromNow()} by {comment.user.login}
+            </Text>
+            <Text style={styles.muted}>
+              {' '}
+              {comment.body_html}
             </Text>
           </View>
         </TouchableHighlight>
@@ -69,6 +73,9 @@ var CommentList = React.createClass({
 })
 
 var styles = StyleSheet.create({
+  container:{
+    flex:1,
+  },
   inline: {
     flexDirection: 'row',
   },

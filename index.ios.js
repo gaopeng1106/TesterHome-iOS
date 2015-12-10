@@ -121,7 +121,7 @@ var TabBarItemIOS = TabBarIOS.Item;
      flex: 1,
      marginTop: 30,
    },
-  
+
 
  });
  AppRegistry.registerComponent('TesterHome', () => TesterHome);

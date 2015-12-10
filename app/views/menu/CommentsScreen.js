@@ -7,7 +7,7 @@ var {
 } = React
 var RefreshableListView = require('react-native-refreshable-listview')
 
-var Story = require('../../models/Story')
+var Story = require('../../models/Comment')
 var Routes = require('../../Routes')
 var StoreWatchMixin = require('./StoreWatchMixin')
 var View = require('./View')
@@ -15,7 +15,8 @@ var Text = require('./Text')
 var Badge = require('./Badge')
 var Loading = require('./Loading')
 var Comment = require('./Comment')
-
+var apilist = require('../../webapi/apilist');
+var currentApi = apilist.DETAIL_API;
 var baseDataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})
 
 var CommentsScreen = React.createClass({
@@ -24,15 +25,19 @@ var CommentsScreen = React.createClass({
   ],
   getInitialState() {
     return {
+      id : this.props.id,
+      url: currentApi + this.props.id + "/replies.json",
       dataSource: baseDataSource.cloneWithRows(this.getComments() || []),
     }
   },
   componentDidMount() {
-    if (!this.getStory()) this.loadStory()
+    console.log("componentDidMount")
+    if (!this.getStory().length) this.loadStory()
   },
   getStoreWatches() {
     this.watchStore(Story, _.debounce(() => {
       if (this.isMounted()) {
+        console.log("CommentsScreen->getStoreWatches")
         this.setState({
           dataSource: baseDataSource.cloneWithRows(this.getComments() || []),
         })
@@ -40,14 +45,17 @@ var CommentsScreen = React.createClass({
     }, 100))
   },
   loadStory(callback) {
-    Story.fetch(this.props.storyId).then(callback)
+    console.log("loadStory : " + this.state.url)
+    Story.fetch(this.state.url).then(callback)
   },
   getStory() {
-    return Story.get(this.props.storyId)
+    console.log("getStory : ")
+    // console.log(Story.ordered());
+    return Story.ordered();
   },
   getComments() {
     var story = this.getStory()
-    return story && story.childItems || null
+    return story
   },
   isLoaded() {
     return this.getComments() != null

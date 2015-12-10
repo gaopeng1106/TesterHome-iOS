@@ -3,5 +3,5 @@
 module.exports = {
   'brandName': 'TesterHome',
   'apiBaseUrl': 'https://testerhome.com/api/v3/',
-  'baseUrl':'https://testerhome.com',
+  'baseUrl':'https://testerhome.com/',
 };
